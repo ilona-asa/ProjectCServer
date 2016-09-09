@@ -250,8 +250,12 @@ void requestHandle(int fd, long arrival, long dispatch) {
 		/* Delegate the request processing to the Request module */
 		requestServeStatic(fd, filename, sbuf.st_size, arrival, dispatch);
 	} else {
-		/* TODO: Implement the dynamic case */
-		
+		/* TODO: Implement the dynamic case change by Asa */
+		if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
+			requestError(fd, filename, "403", "Forbidden", "1DT032 Server could not read this file");
+			return;
+		}
+		requestServeDynamic(fd, filename, cgiargs, arrival, dispatch);
 	}
 }
 
