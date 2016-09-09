@@ -221,6 +221,11 @@ void requestHandle(int fd, long arrival, long dispatch) {
 	printf("%s %s %s\n", method, uri, version);
 
 	/* TODO: Return an error if a GET method is NOT received. */
+	if(strcmp(method, "GET") != 0){
+		requestError(fd, method, "405", "Method Not Allowed", 
+			     "1DT032 Server only serves GET method");
+		return;
+	}
 
 	/* Read request headers */
 	requestReadHdrs(&rio);
