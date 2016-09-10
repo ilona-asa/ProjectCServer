@@ -29,7 +29,18 @@ typedef struct {
  */
 void getargs(int argc, char *argv[], int *port)
 {
-	/* TODO: Verify that the arguments are valid */
+	/* TODO: Verify that the arguments are valid change by Asa*/
+	assert(argc >= 0);
+	assert(argv != NULL);
+	assert(*port >= 0);
+
+	if (argc != atoi(argv)) {
+		/* number of input arguments is not the same with input arguments */
+		requestHandle(int fd, long arrival, long dispatch);
+		requestError(int argc, "arguments", "400", "Bad Request", "The input arguments are not complete")
+	}else {
+		return atoi(argv);
+	}
 
 }
 
