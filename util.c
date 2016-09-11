@@ -209,11 +209,15 @@ void Listen(int s, int backlog)
 
 int Accept(int s, struct sockaddr *addr, socklen_t *addrlen) 
 {
-	/* TODO: Implement this wrapper for the UNIX accept interface.
+	/* TODO: Michael Wijaya Saputra
+	Implement this wrapper for the UNIX accept interface.
 	 * Return an error if the accept() call fails, otherwise return 
 	 * the value. 
 	 * HINT: Look at the functions Listen() and Connect()
 	 */
+	int s2 = accept(s,addr, addrlen);
+	if(s2<0)
+		unix_error("Not Accepted");
 }
 
 void Connect(int sockfd, struct sockaddr *serv_addr, int addrlen) 
