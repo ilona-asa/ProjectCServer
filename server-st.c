@@ -35,9 +35,8 @@ void getargs(int argc, char *argv[], int *port)
 	assert(*port >= 0);
 
 	if (argc != atoi(argv)) {
-		/* number of input arguments is not the same with input arguments */
-		requestHandle(int fd, long arrival, long dispatch);
-		requestError(int argc, "arguments", "400", "Bad Request", "The input arguments are not complete")
+		/* number of input arguments is not the same with input arguments: kurang message helper*/
+		exit(0);
 	}else {
 		return atoi(argv);
 	}
