@@ -32,14 +32,32 @@ void getargs(int argc, char *argv[], int *port)
 	/* TODO: Verify that the arguments are valid change by Asa*/
 	assert(argc >= 0);
 	assert(argv != NULL);
-	assert(*port >= 0);
 
-	if (argc != atoi(argv)) {
+	//assert(port >= 0);
+	
+	printf("argc: %d\n",argc);
+	printf("argv: %s\n",*argv);
+	*port = atoi(argv[1]);
+	printf("port: %d\n",*port);
+	
+	// To verify the arguments from user is 2 arguments.
+	if(argc == 2)
+	{
+		*port = atoi(argv[1]);
+		printf("port: %d\n",*port);
+	}
+	else
+	{	
+		printf("Your Number of Argument not equal to 2\n");
+	}
+	
+	/*if (argc != atoi(argv)) {
+		printf("Error\n");
 		/* number of input arguments is not the same with input arguments: kurang message helper*/
-		exit(0);
+		/*exit(0);
 	}else {
 		return atoi(argv);
-	}
+	}*/
 
 }
 
@@ -79,6 +97,8 @@ int main(int argc, char *argv[]) {
 	/* Main server loop */
 	while (1) {
 		clientlen = sizeof(clientaddr);
+		
+		Listen(port,LISTENQ);
 
 		/* TODO: Accept a connection and retrieve connfd */
 

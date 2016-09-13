@@ -205,6 +205,8 @@ void Listen(int s, int backlog)
 	int rc;
 	if ((rc = listen(s,  backlog)) < 0)
 		unix_error("Listen error");
+	else
+		unix_error("Listen Success");
 }
 
 int Accept(int s, struct sockaddr *addr, socklen_t *addrlen) 
@@ -217,7 +219,9 @@ int Accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 	 */
 	int s2 = accept(s,addr, addrlen);
 	if(s2<0)
-		unix_error("Not Accepted");
+		return 0;
+	else
+		return 1;
 }
 
 void Connect(int sockfd, struct sockaddr *serv_addr, int addrlen) 
