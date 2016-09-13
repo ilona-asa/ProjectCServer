@@ -90,18 +90,29 @@ int main(int argc, char *argv[]) {
 	getargs(argc, argv, &port);
 
 	printf("\n1DT032 server: Hello! I am running on port %d.\n\n", port);
-
+	//printf("test1\n");
 	/* Listen to user selected port */
 	listenfd = Open_listenfd(port);
 	
+	//printf("istenfd %d\n", listenfd);
 	/* Main server loop */
 	while (1) {
 		clientlen = sizeof(clientaddr);
 		
-		Listen(port,LISTENQ);
-
+		//Listen(port,LISTENQ);
+		//printf("client address %d", clientlen);
 		/* TODO: Accept a connection and retrieve connfd */
-
+		int a = Accept(listenfd, (struct sockaddr *) &clientaddr, &clientlen);
+		printf("%d\n",a);
+		if(a == 1)
+		{
+			printf("Good Job\n");
+		}
+		else
+		{
+			printf("Rahmanu Buat sampai selesai\n");
+			break;
+		}
 		/* TODO: Allocate a request structure */
 
 		/* TODO: Save the time for the statistics */
@@ -115,7 +126,7 @@ int main(int argc, char *argv[]) {
 		/* TODO: Close */
 	
 	}
-
+return 0;
 }
 
 
