@@ -217,9 +217,8 @@ int Accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 	 * the value. 
 	 * HINT: Look at the functions Listen() and Connect()
 	 */
-	
 	int s2 = accept(s,addr, addrlen);
-	printf("%d\n",s2);
+	printf("Test : %d\n",s2);
 	if(s2<0)
 		return 0;
 	else

@@ -103,7 +103,6 @@ int main(int argc, char *argv[]) {
 		//printf("client address %d", clientlen);
 		/* TODO: Accept a connection and retrieve connfd */
 		int a = Accept(listenfd, (struct sockaddr *) &clientaddr, &clientlen);
-		printf("%d\n",a);
 		if(a == 1)
 		{
 			printf("Good Job\n");
@@ -113,6 +112,7 @@ int main(int argc, char *argv[]) {
 			printf("Rahmanu Buat sampai selesai\n");
 			break;
 		}
+
 		/* TODO: Allocate a request structure */
 
 		/* TODO: Save the time for the statistics */
