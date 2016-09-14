@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
 		/* TODO: Allocate a request structure */
 
 		/* TODO: Save the time for the statistics */
-
+		long save_time = calculate_time(arrival);
 		/* TODO: Set the request file descriptor to the one accepted */
 
 		/* TODO: Set the arrival and dispatch time */
