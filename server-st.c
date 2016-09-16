@@ -114,17 +114,19 @@ int main(int argc, char *argv[]) {
 		}
 
 		/* TODO: Allocate a request structure */
-
+		connfd = Open_clientfd(argv[0], port);
 		/* TODO: Save the time for the statistics */
-		long save_time = calculate_time(arrival);
+		gettimeofday(&arrival, NULL);
 		/* TODO: Set the request file descriptor to the one accepted */
-
+		fd_set readfds, writefds, exceptfds;		
+		Select(connfd, &readfds, &writefds, &exceptfds, &arrival);
 		/* TODO: Set the arrival and dispatch time */
-		
+		long arrive = calculate_time(arrival);
+		long dispatch = calculate_time(arrival)+6000;
 		/* TODO: Call the request handler */
-
+		requestHandle(connfd, arrive, dispatch);
 		/* TODO: Close */
-	
+		Close(connfd);
 	}
 return 0;
 }
