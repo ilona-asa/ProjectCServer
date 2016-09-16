@@ -69,6 +69,9 @@ void requestReadHdrs(rio_t *rp) {
 	 * The previous line will only read one line, however, it should
 	 * discard everything up to an empty text line.
 	 */
+	 while(strcmp(buf, "\r\n") < 0){
+		Rio_readlineb(rp, buf, MAXLINE);
+	}
 
 	return;
 }
