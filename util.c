@@ -421,6 +421,7 @@ ssize_t rio_readlineb(rio_t *rp, void *usrbuf, size_t maxlen)
 				break;
 			}
 		} else {
+			printf("Error");
 			/* error */
 			return -1;
 		}
@@ -487,22 +488,35 @@ int open_clientfd(char *hostname, int port)
 	int clientfd;
 	struct hostent *hp;
 	struct sockaddr_in serveraddr;
-
+	
+	printf("Hostname :%s Port: %d\n",hostname,port);
+	
 	if ((clientfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	{
+		printf("Test1");
 		return -1; /* check errno for cause of error */
-
+	}
+	
 	/* Fill in the server's IP address and port */
 	if ((hp = gethostbyname(hostname)) == NULL)
+	{
+		printf("Test2");
 		return -2; /* check h_errno for cause of error */
+	}
+	
 	bzero((char *) &serveraddr, sizeof(serveraddr));
 	serveraddr.sin_family = AF_INET;
 	bcopy((char *)hp->h_addr, 
 	      (char *)&serveraddr.sin_addr.s_addr, hp->h_length);
-	serveraddr.sin_port = htons(port);
+	serveraddr.sin_port = htons(port);   
 
 	/* Establish a connection with the server */
 	if (connect(clientfd, (SA *) &serveraddr, sizeof(serveraddr)) < 0)
+	{
+		printf("Test1");
 		return -1;
+	}
+	
 	return clientfd;
 }
 
@@ -556,7 +570,9 @@ int open_listenfd(int port)
 int Open_clientfd(char *hostname, int port) 
 {
 	int rc;
-	if ((rc = open_clientfd(hostname, port)) < 0) {
+	rc = open_clientfd(hostname, port);
+	printf("RC : %d\n",rc);
+	if (rc < 0) {
 		if (rc == -1)
 			unix_error("Open_clientfd Unix error");
 		else        
