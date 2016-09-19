@@ -32,7 +32,6 @@ void getargs(int argc, char *argv[], int *port)
 	/* TODO: Verify that the arguments are valid change*/
 	assert(argc >= 0);
 	assert(argv != NULL);
-	assert(*port >= 0);
 
 	assert(atoi(argv[1])!=0);     
     	if (argc != 2) 
