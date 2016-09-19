@@ -76,7 +76,7 @@ void requestReadHdrs(rio_t *rp) {
     	}*/
 	int riosize;
     	while((riosize = Rio_readlineb(rp, tmp, MAXLINE)) > 2) {
-      		printf("riosize: %d\n", riosize);
+      		
     	}
 	/*while(strcmp(buf, "\r\n") < 0){
 		Rio_readlineb(rp, buf, MAXLINE);
@@ -262,7 +262,7 @@ void requestHandle(int fd, long arrival, long dispatch) {
 		/* Delegate the request processing to the Request module */
 		requestServeStatic(fd, filename, sbuf.st_size, arrival, dispatch);
 	} else {
-		/* TODO: Implement the dynamic case change by Asa */
+		/* TODO: Implement the dynamic case change*/
 		if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
 			requestError(fd, filename, "403", "Forbidden", "1DT032 Server could not read this file");
 			return;

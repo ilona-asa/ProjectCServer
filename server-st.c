@@ -13,7 +13,6 @@
 #include <assert.h>
 #include "request.h"
 #include "util.h"
-#include <time.h> 
 
 /* Structure of a HTTP request. */
 typedef struct {
@@ -30,11 +29,15 @@ typedef struct {
  */
 void getargs(int argc, char *argv[], int *port)
 {
-	/* TODO: Verify that the arguments are valid change by Asa*/
+	/* TODO: Verify that the arguments are valid change*/
+	assert(argc >= 0);
+	assert(argv != NULL);
+	assert(*port >= 0);
+
 	assert(atoi(argv[1])!=0);     
     	if (argc != 2) 
 	{
-   	 	fprintf(stderr, "usage: %s <port>\n", argv[0]);
+   	 	printf("Your Number of Argument not equal to 2\n");
 		
     		exit(1);
 	}
@@ -42,43 +45,15 @@ void getargs(int argc, char *argv[], int *port)
 	{
 		*port = atoi(argv[1]);
 	}
-	/*assert(argc >= 0);
-	assert(argv != NULL);
-
-	//assert(port >= 0);
 	
-	printf("argc: %d\n",argc);
-	printf("argv: %s\n",*argv);
-	*port = atoi(argv[1]);
-	printf("port: %d\n",*port);
-	
-	// To verify the arguments from user is 2 arguments.
-	if(argc == 2)
-	{
-		*port = atoi(argv[1]);
-		printf("port: %d\n",*port);
-	}
-	else
-	{	
-		printf("Your Number of Argument not equal to 2\n");
-	}
-	
-	/*if (argc != atoi(argv)) {
-		printf("Error\n");
-		/* number of input arguments is not the same with input arguments: kurang message helper*/
-		/*exit(0);
-	}else {
-		return atoi(argv);
-	}*/
 
 
 
-
+}
 int requestcmp(const void *first, const void *second) {
 	assert(first != NULL);
 	assert(second != NULL);
 	return ((*(request **)first)->size - (*(request **)second)->size);
-}
 }
 
 /**
@@ -99,76 +74,55 @@ int main(int argc, char *argv[]) {
 	int listenfd, connfd, port, clientlen;
 	struct sockaddr_in clientaddr;
 	struct timeval arrival;
-	time_t ticks;
-	char req[MAXLINE];
-	//struct request req;	
 
 	/* Parse the input arguments */
 	getargs(argc, argv, &port);
 
 	printf("\n1DT032 server: Hello! I am running on port %d.\n\n", port);
-	//printf("test1\n");
-	/* Listen to user selected port */
+	
 	listenfd = Open_listenfd(port);
 	
-	//printf("istenfd %d\n", listenfd);
-
+	
 	/* Main server loop */
 	while (1) {
 		clientlen = sizeof(clientaddr);
 		
-		//Listen(port,LISTENQ);
-		//printf("client address %d", clientlen);
+		
 		/* TODO: Accept a connection and retrieve connfd */
-		 connfd = Accept(listenfd, (struct sockaddr *) &clientaddr, &clientlen);
-		if(connfd == 1)
-		{
-			printf("Good Job\n");
-		}
-		else
-		{
-			printf("Rahmanu Buat sampai selesai\n");
-			break;
-		}
+		//Di casting karena mengikuti parameter dari accept bawaan Linux : int sockfd, struct sockaddr *addr, socklen_t *addrlen)
+		connfd = Accept(listenfd, (struct sockaddr *) &clientaddr, (socklen_t *) &clientlen);
+		if (connfd < 0)
+        		unix_error("ERROR on accept");
 	
 		/* TODO: Allocate a request structure */
-		request *st = malloc(sizeof(request));
+		request *req = malloc(sizeof(request));
 		
 
 		
 		/* TODO: Save the time for the statistics */
-		//gettimeofday(&arrival, NULL);
-		struct timeval tvalbefore, tvalafter;
-                gettimeofday(&tvalbefore, NULL);    
+		
+		gettimeofday(&arrival, NULL);
+    
 		
 		
 		/* TODO: Set the request file descriptor to the one accepted */
 		
-		st->fd = connfd;
-		/*while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
-    		{
-        		//Send the message back to client
-        		write(client_sock , client_message , strlen(client_message));
-    		}*/
-
-		//snprintf(buf, MAXBUF, "%.24s\r\n", ctime(&ticks));
-		//fd_set readfds, writefds, exceptfds;		
-		//Select(connfd, &readfds, &writefds, &exceptfds, &arrival);
+		req->fd = connfd;
 		
 
 		/* TODO: Set the arrival and dispatch time */
-		gettimeofday(&tvalafter, NULL);
-                st->arrival = tvalbefore.tv_sec;
-                st->dispatch = tvalafter.tv_sec;
-		/*long arrive = calculate_time(arrival);
-		long dispatch = calculate_time(arrival)+6000;
-		printf("Test1,2,3");*/
+		// untuk mendapatkan time dalam bentuk second
+		req->arrival = calculate_time(arrival);
+		gettimeofday(&arrival, NULL);               
+                req->dispatch = calculate_time(arrival);
+		
 
 		/* TODO: Call the request handler */
-		requestHandle(st->fd, st->arrival, st->dispatch);
-		printf("Test1,2");
+		requestHandle(req->fd, req->arrival, req->dispatch);
+		
 		/* TODO: Close */
-		Close(st->fd);
+		Close(req->fd);
+		exit(0);
 	}
 return 0;
 }
