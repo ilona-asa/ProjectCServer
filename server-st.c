@@ -13,7 +13,6 @@
 #include <assert.h>
 #include "request.h"
 #include "util.h"
-#include <time.h> 
 
 /* Structure of a HTTP request. */
 typedef struct {
@@ -30,35 +29,7 @@ typedef struct {
  */
 void getargs(int argc, char *argv[], int *port)
 {
-	/* TODO: Verify that the arguments are valid change by Asa*/
-	assert(argc >= 0);
-	assert(argv != NULL);
-
-	//assert(port >= 0);
-	
-	printf("argc: %d\n",argc);
-	printf("argv: %s\n",*argv);
-	*port = atoi(argv[1]);
-	printf("port: %d\n",*port);
-	
-	// To verify the arguments from user is 2 arguments.
-	if(argc == 2)
-	{
-		*port = atoi(argv[1]);
-		printf("port: %d\n",*port);
-	}
-	else
-	{	
-		printf("Your Number of Argument not equal to 2\n");
-	}
-	
-	/*if (argc != atoi(argv)) {
-		printf("Error\n");
-		/* number of input arguments is not the same with input arguments: kurang message helper*/
-		/*exit(0);
-	}else {
-		return atoi(argv);
-	}*/
+	/* TODO: Verify that the arguments are valid */
 
 }
 
@@ -86,76 +57,35 @@ int main(int argc, char *argv[]) {
 	int listenfd, connfd, port, clientlen;
 	struct sockaddr_in clientaddr;
 	struct timeval arrival;
-	time_t ticks;
-	char buf[MAXLINE];
-	//struct request req;	
 
 	/* Parse the input arguments */
 	getargs(argc, argv, &port);
 
 	printf("\n1DT032 server: Hello! I am running on port %d.\n\n", port);
-	//printf("test1\n");
+
 	/* Listen to user selected port */
 	listenfd = Open_listenfd(port);
 	
-	//printf("istenfd %d\n", listenfd);
-
 	/* Main server loop */
 	while (1) {
 		clientlen = sizeof(clientaddr);
-		
-		//Listen(port,LISTENQ);
-		//printf("client address %d", clientlen);
+
 		/* TODO: Accept a connection and retrieve connfd */
-		int a = Accept(listenfd, (struct sockaddr *) &clientaddr, &clientlen);
-		if(a == 1)
-		{
-			printf("Good Job\n");
-		}
-		else
-		{
-			printf("Rahmanu Buat sampai selesai\n");
-			break;
-		}
 
 		/* TODO: Allocate a request structure */
-		clientaddr.sin_family = AF_INET;
-    		clientaddr.sin_addr.s_addr = INADDR_ANY;
-    		clientaddr.sin_port = htons( 8888 );
-		//connfd = Open_clientfd(argv[0], port);
-		//req.fd = a;
-		//req.size = 
-		printf("Test gahah1");
+
 		/* TODO: Save the time for the statistics */
-		//gettimeofday(&arrival, NULL);
-		ticks = time(NULL);        
-		
-		
+
 		/* TODO: Set the request file descriptor to the one accepted */
 
-		while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
-    		{
-        		//Send the message back to client
-        		write(client_sock , client_message , strlen(client_message));
-    		}
-
-		//snprintf(buf, MAXBUF, "%.24s\r\n", ctime(&ticks));
-		//fd_set readfds, writefds, exceptfds;		
-		//Select(connfd, &readfds, &writefds, &exceptfds, &arrival);
-		printf("Test gahah");
-
 		/* TODO: Set the arrival and dispatch time */
-		long arrive = calculate_time(arrival);
-		long dispatch = calculate_time(arrival)+6000;
-		printf("Test1,2,3");
-
+		
 		/* TODO: Call the request handler */
-		requestHandle(connfd, arrive, dispatch);
-		printf("Test1,2");
+
 		/* TODO: Close */
-		Close(connfd);
+	
 	}
-return 0;
+
 }
 
 

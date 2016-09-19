@@ -205,24 +205,15 @@ void Listen(int s, int backlog)
 	int rc;
 	if ((rc = listen(s,  backlog)) < 0)
 		unix_error("Listen error");
-	else
-		unix_error("Listen Success");
 }
 
 int Accept(int s, struct sockaddr *addr, socklen_t *addrlen) 
 {
-	/* TODO: Michael Wijaya Saputra
-	Implement this wrapper for the UNIX accept interface.
+	/* TODO: Implement this wrapper for the UNIX accept interface.
 	 * Return an error if the accept() call fails, otherwise return 
 	 * the value. 
 	 * HINT: Look at the functions Listen() and Connect()
 	 */
-	int s2 = accept(s,addr, addrlen);
-	printf("Test : %d\n",s2);
-	if(s2<0)
-		return 0;
-	else
-		return 1;
 }
 
 void Connect(int sockfd, struct sockaddr *serv_addr, int addrlen) 
@@ -421,7 +412,6 @@ ssize_t rio_readlineb(rio_t *rp, void *usrbuf, size_t maxlen)
 				break;
 			}
 		} else {
-			printf("Error");
 			/* error */
 			return -1;
 		}
@@ -488,35 +478,22 @@ int open_clientfd(char *hostname, int port)
 	int clientfd;
 	struct hostent *hp;
 	struct sockaddr_in serveraddr;
-	
-	printf("Hostname :%s Port: %d\n",hostname,port);
-	
+
 	if ((clientfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-		printf("Test1");
 		return -1; /* check errno for cause of error */
-	}
-	
+
 	/* Fill in the server's IP address and port */
 	if ((hp = gethostbyname(hostname)) == NULL)
-	{
-		printf("Test2");
 		return -2; /* check h_errno for cause of error */
-	}
-	
 	bzero((char *) &serveraddr, sizeof(serveraddr));
 	serveraddr.sin_family = AF_INET;
 	bcopy((char *)hp->h_addr, 
 	      (char *)&serveraddr.sin_addr.s_addr, hp->h_length);
-	serveraddr.sin_port = htons(port);   
+	serveraddr.sin_port = htons(port);
 
 	/* Establish a connection with the server */
 	if (connect(clientfd, (SA *) &serveraddr, sizeof(serveraddr)) < 0)
-	{
-		printf("Test1");
 		return -1;
-	}
-	
 	return clientfd;
 }
 
@@ -570,9 +547,7 @@ int open_listenfd(int port)
 int Open_clientfd(char *hostname, int port) 
 {
 	int rc;
-	rc = open_clientfd(hostname, port);
-	printf("RC : %d\n",rc);
-	if (rc < 0) {
+	if ((rc = open_clientfd(hostname, port)) < 0) {
 		if (rc == -1)
 			unix_error("Open_clientfd Unix error");
 		else        

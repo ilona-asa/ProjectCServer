@@ -1,4 +1,4 @@
-/**
+ /**
  * request.c: Does the bulk of the work for the web server.
  *
  * Course: 1DT032
@@ -64,14 +64,13 @@ void requestReadHdrs(rio_t *rp) {
 	char buf[MAXLINE];
 
 	Rio_readlineb(rp, buf, MAXLINE);
-
+	
+	printf("Test\n");
 	/* TODO: 
 	 * The previous line will only read one line, however, it should
 	 * discard everything up to an empty text line.
 	 */
-	 while(strcmp(buf, "\r\n") < 0){
-		Rio_readlineb(rp, buf, MAXLINE);
-	}
+	
 
 	return;
 }
@@ -223,12 +222,7 @@ void requestHandle(int fd, long arrival, long dispatch) {
 
 	printf("%s %s %s\n", method, uri, version);
 
-	/* TODO: Return an error if a GET method is NOT received. */
-	if(strcmp(method, "GET") != 0){
-		requestError(fd, method, "405", "Method Not Allowed", 
-			     "1DT032 Server only serves GET method");
-		return;
-	}
+	/* TODO: Return an error if a GET method is received. */
 
 	/* Read request headers */
 	requestReadHdrs(&rio);
@@ -253,12 +247,8 @@ void requestHandle(int fd, long arrival, long dispatch) {
 		/* Delegate the request processing to the Request module */
 		requestServeStatic(fd, filename, sbuf.st_size, arrival, dispatch);
 	} else {
-		/* TODO: Implement the dynamic case change by Asa */
-		if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
-			requestError(fd, filename, "403", "Forbidden", "1DT032 Server could not read this file");
-			return;
-		}
-		requestServeDynamic(fd, filename, cgiargs, arrival, dispatch);
+		/* TODO: Implement the dynamic case */
+		
 	}
 }
 
