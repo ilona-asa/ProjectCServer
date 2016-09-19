@@ -62,16 +62,25 @@ void requestReadHdrs(rio_t *rp) {
 	assert(rp != NULL);
 
 	char buf[MAXLINE];
+	char tmp[MAXLINE];
 
 	Rio_readlineb(rp, buf, MAXLINE);
 
+	
 	/* TODO: 
 	 * The previous line will only read one line, however, it should
 	 * discard everything up to an empty text line.
 	 */
-	 while(strcmp(buf, "\r\n") < 0){
+	/*while((riosize = Rio_readlineb(rp, buf, MAXLINE)) > 2) {
+      		printf("riosize: %d\n", riosize);
+    	}*/
+	int riosize;
+    	while((riosize = Rio_readlineb(rp, tmp, MAXLINE)) > 2) {
+      		printf("riosize: %d\n", riosize);
+    	}
+	/*while(strcmp(buf, "\r\n") < 0){
 		Rio_readlineb(rp, buf, MAXLINE);
-	}
+	}*/
 
 	return;
 }

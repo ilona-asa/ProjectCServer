@@ -31,7 +31,18 @@ typedef struct {
 void getargs(int argc, char *argv[], int *port)
 {
 	/* TODO: Verify that the arguments are valid change by Asa*/
-	assert(argc >= 0);
+	assert(atoi(argv[1])!=0);     
+    	if (argc != 2) 
+	{
+   	 	fprintf(stderr, "usage: %s <port>\n", argv[0]);
+		
+    		exit(1);
+	}
+	else
+	{
+		*port = atoi(argv[1]);
+	}
+	/*assert(argc >= 0);
 	assert(argv != NULL);
 
 	//assert(port >= 0);
@@ -60,12 +71,14 @@ void getargs(int argc, char *argv[], int *port)
 		return atoi(argv);
 	}*/
 
-}
+
+
 
 int requestcmp(const void *first, const void *second) {
 	assert(first != NULL);
 	assert(second != NULL);
 	return ((*(request **)first)->size - (*(request **)second)->size);
+}
 }
 
 /**
@@ -107,8 +120,8 @@ int main(int argc, char *argv[]) {
 		//Listen(port,LISTENQ);
 		//printf("client address %d", clientlen);
 		/* TODO: Accept a connection and retrieve connfd */
-		int a = Accept(listenfd, (struct sockaddr *) &clientaddr, &clientlen);
-		if(a == 1)
+		 connfd = Accept(listenfd, (struct sockaddr *) &clientaddr, &clientlen);
+		if(connfd == 1)
 		{
 			printf("Good Job\n");
 		}
@@ -119,20 +132,19 @@ int main(int argc, char *argv[]) {
 		}
 	
 		/* TODO: Allocate a request structure */
-
-		clientaddr.sin_family = AF_INET;
-    		clientaddr.sin_addr.s_addr = INADDR_ANY;
-    		clientaddr.sin_port = htons( 8888 );
+		request *st = malloc(sizeof(request));
+		
 
 		
 		/* TODO: Save the time for the statistics */
 		//gettimeofday(&arrival, NULL);
-		ticks = time(NULL);        
+		struct timeval tvalbefore, tvalafter;
+                gettimeofday(&tvalbefore, NULL);    
 		
 		
 		/* TODO: Set the request file descriptor to the one accepted */
 		
-
+		st->fd = connfd;
 		/*while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
     		{
         		//Send the message back to client
@@ -145,15 +157,18 @@ int main(int argc, char *argv[]) {
 		
 
 		/* TODO: Set the arrival and dispatch time */
-		long arrive = calculate_time(arrival);
+		gettimeofday(&tvalafter, NULL);
+                st->arrival = tvalbefore.tv_sec;
+                st->dispatch = tvalafter.tv_sec;
+		/*long arrive = calculate_time(arrival);
 		long dispatch = calculate_time(arrival)+6000;
-		printf("Test1,2,3");
+		printf("Test1,2,3");*/
 
 		/* TODO: Call the request handler */
-		requestHandle(connfd, arrive, dispatch);
+		requestHandle(st->fd, st->arrival, st->dispatch);
 		printf("Test1,2");
 		/* TODO: Close */
-		Close(connfd);
+		Close(st->fd);
 	}
 return 0;
 }
