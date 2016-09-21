@@ -85,10 +85,12 @@ void getargs(int argc, char *argv[], int *port, int *threads, int *buffers, sche
 	/* We set the number of buffers==threads */
 	*buffers = atoi(argv[2]);
 
-	if(strcasecmp(argv[3], "FIFO") == 0) {
-		*alg = FIFO;
-	} else if(strcasecmp(argv[3], "SFF") == 0) {
-		*alg = SFF;
+	if(strcasecmp(argv[3], "STACK") == 0) {
+		*alg = STACK;
+	} else if(strcasecmp(argv[3], "BFF") == 0) {
+				
+		*alg = BFF;
+	
 	} else {
 		fprintf(stderr, "Scheduling algorithm must be one of the following options: FIFO, STACK, SFF, BFF.\n");
 		exit(1);
@@ -121,11 +123,13 @@ void *consumer(void *arg) {
 	/* assert(arg != NULL); */
 
 	/* TODO: Create a thread structure */
-
+	thread worker;
 	/* TODO: Initialize the statistics of the thread structure */
+
 	
 	request *req;
 	struct timeval dispatch;
+	
 
 	/* Main thread loop */
 	while(1) {
@@ -138,10 +142,12 @@ void *consumer(void *arg) {
 		/* TODO: Set the ID of the the thread in charge */
 
 		/* Get the request from the queue according to the sched algorithm */
-		if (algorithm == POLICY1) {
+		if (algorithm == STACK) {
 			/* TODO: Implement your first scheduling policy here (FIFO or STACK) */
-		} else if (algorithm == POLICY2) {
+
+		} else if (algorithm == BFF) {
 			/* TODO: Implement your second scheduling policy here (SFF or BFF) */
+			
 		}
 
 		/* TODO: Set the dispatch time of the request */
@@ -188,10 +194,18 @@ int main(int argc, char *argv[])
 	 *     fillptr,
 	 *     useptr,
 	 *     algorithm  */
+	max = 7;
+	numfull = 3;
+	
+	
 
-	/* TODO: Allocate the requests queue */
+	/* TODO: Allocate the requests queue  */
+
+	request *req = malloc(sizeof(buffers));
 	
 	/* TODO: Allocate the threads buffer */
+
+	
 
 	/* TODO: Create N consumer threads */
 	int i;
@@ -217,9 +231,9 @@ int main(int argc, char *argv[])
 		/* TODO: Fill the request structure */
 
 		/* Queue new request depending on scheduling algorithm */
-		if (alg == POLICY1) {
+		if (alg == STACK) {
 			/* TODO: Queue request according to POLICY1 (FIFO or STACK) */
-		} else if(alg == POLICY2) {
+		} else if(alg == BFF) {
 			/* TODO: Queue request according to POLICY2 (SFF or BFF) */
 			/* HINT: 
 			   You can use requestFileSize() to check the size of the file requested.
