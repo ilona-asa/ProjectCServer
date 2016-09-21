@@ -128,8 +128,8 @@ void requestGetFiletype(char *filename, char *filetype) {
 /**
  * Handles a dynamic request.
  */
-/* TODO: add worker */
-void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, long dispatch)
+/* TODO: add worker DONE*/
+void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, long dispatch, struct thread *worker)
 {
 	char buf[MAXLINE], *emptylist[] = {NULL};
 
@@ -162,8 +162,8 @@ void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, lo
  * Handles a static request.
  * Responds to @fd, sending @filesize bytes from @filename.
  */
-/* TODO: Add worker */
-void requestServeStatic(int fd, char *filename, int filesize, long arrival, long dispatch) 
+/* TODO: Add worker DONE*/
+void requestServeStatic(int fd, char *filename, int filesize, long arrival, long dispatch, struct thread *worker) 
 {
 	int srcfd;
 	char *srcp, filetype[MAXLINE], buf[MAXBUF];
@@ -214,8 +214,8 @@ void requestServeStatic(int fd, char *filename, int filesize, long arrival, long
  * Receives and handles a request from @fd, setting the
  * @arrival and @dispatch times for the statistics.
  */
-/* TODO: Add worker */
-void requestHandle(int fd, long arrival, long dispatch)
+/* TODO: Add worker DONE*/
+void requestHandle(int fd, long arrival, long dispatch, struct thread *worker)
 {
 
 	int is_static;
