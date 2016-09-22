@@ -87,9 +87,9 @@ void getargs(int argc, char *argv[], int *port, int *threads, int *buffers, sche
 
 	if(strcasecmp(argv[3], "STACK") == 0) {
 		*alg = STACK;
-	} else if(strcasecmp(argv[3], "BFF") == 0) {
-				
-		*alg = BFF;
+	} else if(strcasecmp(argv[3], "BF") == 0) {
+					
+		*alg = BF;
 	
 	} else {
 		fprintf(stderr, "Scheduling algorithm must be one of the following options: FIFO, STACK, SFF, BFF.\n");
@@ -143,9 +143,10 @@ void *consumer(void *arg) {
 
 		/* Get the request from the queue according to the sched algorithm */
 		if (algorithm == STACK) {
+			
 			/* TODO: Implement your first scheduling policy here (FIFO or STACK) */
 
-		} else if (algorithm == BFF) {
+		} else if (algorithm == BF) {
 			/* TODO: Implement your second scheduling policy here (SFF or BFF) */
 			
 		}
@@ -195,8 +196,9 @@ int main(int argc, char *argv[])
 	 *     useptr,
 	 *     algorithm  */
 	max = 7;
-	numfull = 3;
-	
+	numfull = 0;
+	fillptr = 0;
+	useptr = 0;
 	
 
 	/* TODO: Allocate the requests queue  */
@@ -232,14 +234,18 @@ int main(int argc, char *argv[])
 
 		/* Queue new request depending on scheduling algorithm */
 		if (alg == STACK) {
+			
 			/* TODO: Queue request according to POLICY1 (FIFO or STACK) */
-		} else if(alg == BFF) {
+
+			
+		} else if(alg == BF) {
 			/* TODO: Queue request according to POLICY2 (SFF or BFF) */
 			/* HINT: 
 			   You can use requestFileSize() to check the size of the file requested.
 			   You can use qsort() with requestcmp() to sort the requests by size.
 			 */
-		}
+
+					}
 
 		/* TODO: Increase the number of clients queued */
 
