@@ -125,8 +125,9 @@ void *consumer(void *arg) {
 	/* TODO: Create a thread structure */
 	thread worker;
 	/* TODO: Initialize the statistics of the thread structure */
-
 	
+	
+			
 	request *req;
 	struct timeval dispatch;
 	
@@ -134,8 +135,8 @@ void *consumer(void *arg) {
 	/* Main thread loop */
 	while(1) {
 		/* TODO: Take the mutex */
-
-		/* TODO: Wait if there is no client to be served. */
+		
+		/* TODO: Wait if there is no client to be served. (worker id)*/
 
 		/* TODO: Get the dispatch time */
 		
@@ -207,7 +208,7 @@ int main(int argc, char *argv[])
 	
 	/* TODO: Allocate the threads buffer */
 
-	
+	buffer = malloc(sizeof(request*));
 
 	/* TODO: Create N consumer threads */
 	int i;
@@ -224,13 +225,21 @@ int main(int argc, char *argv[])
 		gettimeofday(&arrival, NULL);
 
 		/* TODO: Take the mutex to modify the requests queue */
+		
 
 		/* TODO: If the request queue is full, wait until somebody frees one slot */
+		
+				
 
 		/* Allocate a request structure */
 		request *req = malloc(sizeof(request)); 
 
 		/* TODO: Fill the request structure */
+
+		req->fd = connfd;
+		req->arrival = calculate_time(arrival);
+		gettimeofday(&arrival, NULL);               
+                req->dispatch = calculate_time(arrival);
 
 		/* Queue new request depending on scheduling algorithm */
 		if (alg == STACK) {
@@ -248,7 +257,7 @@ int main(int argc, char *argv[])
 					}
 
 		/* TODO: Increase the number of clients queued */
-
+		
 		/* TODO: Synchronize */
 	}
 }

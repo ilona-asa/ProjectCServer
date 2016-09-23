@@ -5,6 +5,6 @@
 long requestFileSize(int fd);
 
 /* TODO: Add a parameter to assign a worker to each request */
-void requestHandle(int fd, long arrival, long dispatch, struct thread *worker);
+void requestHandle(int fd, long arrival, long dispatch, thread *worker);
 
 #endif
