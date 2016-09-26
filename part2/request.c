@@ -9,7 +9,6 @@
 #include "util.h"
 #include "request.h"
 
-
 /**
  * requestError
  *
@@ -130,7 +129,7 @@ void requestGetFiletype(char *filename, char *filetype) {
  * Handles a dynamic request.
  */
 /* TODO: add worker DONE*/
-void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, long dispatch, thread *worker)
+void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, long dispatch, struct thread *worker)
 {
 	char buf[MAXLINE], *emptylist[] = {NULL};
 
@@ -164,7 +163,7 @@ void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, lo
  * Responds to @fd, sending @filesize bytes from @filename.
  */
 /* TODO: Add worker DONE*/
-void requestServeStatic(int fd, char *filename, int filesize, long arrival, long dispatch, thread *worker) 
+void requestServeStatic(int fd, char *filename, int filesize, long arrival, long dispatch, struct thread *worker) 
 {
 	int srcfd;
 	char *srcp, filetype[MAXLINE], buf[MAXBUF];
@@ -216,7 +215,7 @@ void requestServeStatic(int fd, char *filename, int filesize, long arrival, long
  * @arrival and @dispatch times for the statistics.
  */
 /* TODO: Add worker DONE*/
-void requestHandle(int fd, long arrival, long dispatch, thread *worker)
+void requestHandle(int fd, long arrival, long dispatch, struct thread *worker)
 {
 
 	int is_static;
