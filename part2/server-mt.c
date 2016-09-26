@@ -137,7 +137,7 @@ void *consumer(void *arg) {
 		/* TODO: Take the mutex */
 		
 		/* TODO: Wait if there is no client to be served. (worker id)*/
-
+			
 		/* TODO: Get the dispatch time */
 		
 		/* TODO: Set the ID of the the thread in charge */
