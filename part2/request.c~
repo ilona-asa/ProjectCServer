@@ -8,7 +8,7 @@
 #include <assert.h>
 #include "util.h"
 #include "request.h"
-
+//#include "server_types.h"
 
 /**
  * requestError
