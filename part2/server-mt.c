@@ -135,10 +135,13 @@ void *consumer(void *arg) {
 	/* Main thread loop */
 	while(1) {
 		/* TODO: Take the mutex */
+		pthread_mutex_t lock;
 		
 		/* TODO: Wait if there is no client to be served. (worker id)*/
-			
+		
+	
 		/* TODO: Get the dispatch time */
+		
 		
 		/* TODO: Set the ID of the the thread in charge */
 

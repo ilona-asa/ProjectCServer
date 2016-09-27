@@ -2,7 +2,7 @@
 #define __SERVER_TYPES__
 
 /* Thread structure */
-typedef struct thread{
+typedef struct {
 	int id;
 	int count;
 	int statics;
