@@ -138,13 +138,13 @@ void *consumer(void *arg) {
 	/* Main thread loop */
 	while(1) {
 		/* TODO: Take the mutex */
-		pthread_mutex_t lock;
+		pthread_mutex_lock(&lock);
 		
 		/* TODO: Wait if there is no client to be served. (worker id)*/
 		
 	
 		/* TODO: Get the dispatch time */
-		
+		gettimeofday(&dispatch, NULL);
 		
 		/* TODO: Set the ID of the the thread in charge */
 
@@ -162,6 +162,8 @@ void *consumer(void *arg) {
 
 
 		/* TODO: Signal that there is one request left */
+		
+		numfull--;
 
 		/* Update Server statistics */
 		clients_treated++;
@@ -175,6 +177,7 @@ void *consumer(void *arg) {
 		printf("Avg. client latency: %.2f\n", (float)latencies_acc/(float)clients_treated);
 
 		/* TODO: Close connection with the client */
+		close;
 	}
 }
 
@@ -203,10 +206,12 @@ int main(int argc, char *argv[])
 	 *     fillptr,
 	 *     useptr,
 	 *     algorithm  */
-	max = 7;
+
+	max = buffer;
 	numfull = 0;
 	fillptr = 0;
 	useptr = 0;
+	algorithm = alg
 	
 
 	/* TODO: Allocate the requests queue  */
@@ -264,6 +269,8 @@ int main(int argc, char *argv[])
 					}
 
 		/* TODO: Increase the number of clients queued */
+		
+		numfull++;
 		
 		/* TODO: Synchronize */
 	}
