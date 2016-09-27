@@ -170,6 +170,8 @@ void *consumer(void *arg) {
 		latencies_acc += (long)(req->dispatch - req->arrival);
 
 		/* TODO: Synchronize */
+		phthread_cond_signal(&empty);
+		phthread_mutex_unlock(&lock);
 
 		/* TODO: Dispatch the request to the Request module */
 
@@ -211,7 +213,7 @@ int main(int argc, char *argv[])
 	numfull = 0;
 	fillptr = 0;
 	useptr = 0;
-	algorithm = alg
+	algorithm = alg;
 	
 
 	/* TODO: Allocate the requests queue  */
@@ -273,6 +275,8 @@ int main(int argc, char *argv[])
 		numfull++;
 		
 		/* TODO: Synchronize */
+		phthread_cond_signal(&empty);
+		phthread_mutex_unlock(&lock);
 	}
 }
 
