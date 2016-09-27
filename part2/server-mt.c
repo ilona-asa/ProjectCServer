@@ -140,8 +140,10 @@ void *consumer(void *arg) {
 		/* TODO: Take the mutex */
 		pthread_mutex_lock(&lock);
 		
-		/* TODO: Wait if there is no client to be served. (worker id)*/
-		
+		/* TODO: Wait if there is no client to be served. */
+		while(numfull == 0){
+			phtread_cond_wait(&fill, &lock);
+		}
 	
 		/* TODO: Get the dispatch time */
 		gettimeofday(&dispatch, NULL);
@@ -242,7 +244,9 @@ int main(int argc, char *argv[])
 		
 
 		/* TODO: If the request queue is full, wait until somebody frees one slot */
-		
+		while(numfull = max){
+			pthread_cond_wait(&empty, &lock);
+		}			
 				
 
 		/* Allocate a request structure */
