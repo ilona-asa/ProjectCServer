@@ -257,11 +257,11 @@ int main(int argc, char *argv[])
 		request *req = malloc(sizeof(request)); 
 
 		/* TODO: Fill the request structure */
-
+		req->size = requestFileSize(connfd);
 		req->fd = connfd;
 		req->arrival = calculate_time(arrival);
-		gettimeofday(&arrival, NULL);               
-                req->dispatch = calculate_time(arrival);
+		// gettimeofday(&arrival, NULL);               
+        // req->dispatch = calculate_time(arrival);
 
 		/* Queue new request depending on scheduling algorithm */
 		if (alg == STACK) {
@@ -279,7 +279,6 @@ int main(int argc, char *argv[])
 					}
 
 		/* TODO: Increase the number of clients queued */
-		
 		numfull++;
 		
 		/* TODO: Synchronize */
