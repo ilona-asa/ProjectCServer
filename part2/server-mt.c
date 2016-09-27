@@ -161,7 +161,7 @@ void *consumer(void *arg) {
 		}
 
 		/* TODO: Set the dispatch time of the request */
-
+		req->dispatch = calculate_time(dispatch);
 
 		/* TODO: Signal that there is one request left */
 		
@@ -229,6 +229,10 @@ int main(int argc, char *argv[])
 	/* TODO: Create N consumer threads */
 	int i;
 	for(i = 0; i < threads; i++) {
+		// membuat allocate size dari thread sebesar size dari pthread
+		cid[i] = malloc(size)of(pthred_t));
+		//membuat thread baru dan memanggil fungsi consumer untuk melakukan request
+		pthread_create(cid[i],NULL,consumer,NULL);
 	}
 
 	/* Main Server Loop */
@@ -241,7 +245,7 @@ int main(int argc, char *argv[])
 		gettimeofday(&arrival, NULL);
 
 		/* TODO: Take the mutex to modify the requests queue */
-		
+		pthread_mutex_lock(&lock);
 
 		/* TODO: If the request queue is full, wait until somebody frees one slot */
 		while(numfull = max){
