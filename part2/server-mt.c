@@ -126,8 +126,11 @@ void *consumer(void *arg) {
 	thread worker;
 	/* TODO: Initialize the statistics of the thread structure */
 	
-	
-			
+	worker.id = 0;
+	worker.count = 0;
+	worker.statics = 0;
+	worker.dynamics = 0;
+				
 	request *req;
 	struct timeval dispatch;
 	
@@ -148,14 +151,15 @@ void *consumer(void *arg) {
 		/* Get the request from the queue according to the sched algorithm */
 		if (algorithm == STACK) {
 			
-			/* TODO: Implement your first scheduling policy here (FIFO or STACK) */
+			/* TODO: Implement your first scheduling policy here (STACK) */
 
 		} else if (algorithm == BF) {
-			/* TODO: Implement your second scheduling policy here (SFF or BFF) */
+			/* TODO: Implement your second scheduling policy here (BFF) */
 			
 		}
 
 		/* TODO: Set the dispatch time of the request */
+
 
 		/* TODO: Signal that there is one request left */
 
@@ -247,11 +251,11 @@ int main(int argc, char *argv[])
 		/* Queue new request depending on scheduling algorithm */
 		if (alg == STACK) {
 			
-			/* TODO: Queue request according to POLICY1 (FIFO or STACK) */
+			/* TODO: Queue request according to POLICY1 (STACK) */
 
 			
 		} else if(alg == BF) {
-			/* TODO: Queue request according to POLICY2 (SFF or BFF) */
+			/* TODO: Queue request according to POLICY2 (BFF) */
 			/* HINT: 
 			   You can use requestFileSize() to check the size of the file requested.
 			   You can use qsort() with requestcmp() to sort the requests by size.
