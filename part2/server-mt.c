@@ -100,7 +100,7 @@ void getargs(int argc, char *argv[], int *port, int *threads, int *buffers, sche
 int requestcmp(const void *first, const void *second) {
 	assert(first != NULL);
 	assert(second != NULL);
-	return ((*(request **)first)->size - (*(request **)second)->size);
+	return ((*(request **)second)->size - (*(request **)first)->size);
 }
 
 /**
@@ -157,6 +157,14 @@ void *consumer(void *arg) {
 
 		} else if (algorithm == BF) {
 			/* TODO: Implement your second scheduling policy here (BFF) */
+			req = (request *)buffer[0];
+          		buffer[0] = buffer[fillptr - 1];
+                       	if(fillptr > 1) 
+			{ 
+                        	qsort(buffer, fillptr, sizeof(*buffer), requestcmp); 
+                        } 
+			fillptr--;
+		
 			
 		}
 
@@ -260,8 +268,8 @@ int main(int argc, char *argv[])
 		req->size = requestFileSize(connfd);
 		req->fd = connfd;
 		req->arrival = calculate_time(arrival);
-		// gettimeofday(&arrival, NULL);               
-        // req->dispatch = calculate_time(arrival);
+		gettimeofday(&arrival, NULL);               
+                req->dispatch = calculate_time(arrival);
 
 		/* Queue new request depending on scheduling algorithm */
 		if (alg == STACK) {
@@ -275,10 +283,16 @@ int main(int argc, char *argv[])
 			   You can use requestFileSize() to check the size of the file requested.
 			   You can use qsort() with requestcmp() to sort the requests by size.
 			 */
+			req->size = requestFileSize(connfd);
+			buffer[fillptr] = req;
+			fillptr++;
+			qsort(buffer,fillptr,sizeof(*buffer),requestcmp);
+			
 
-					}
+		}
 
 		/* TODO: Increase the number of clients queued */
+		
 		numfull++;
 		
 		/* TODO: Synchronize */
