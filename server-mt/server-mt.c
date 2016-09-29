@@ -126,7 +126,7 @@ void *consumer(void *arg) {
 	thread worker;
 	/* TODO: Initialize the statistics of the thread structure */
 	
-	worker.id = 0;
+	worker.id = -1;
 	worker.count = 0;
 	worker.statics = 0;
 	worker.dynamics = 0;
@@ -192,6 +192,7 @@ void *consumer(void *arg) {
 		pthread_mutex_unlock(&lock);
 
 		/* TODO: Dispatch the request to the Request module */
+		requestHandle(req->fd, req->arrival, req->dispatch, &worker);
 
 		printf("Latency for client %d was %ld\n", worker.client_id, (long)(req->dispatch - req->arrival));
 		printf("Avg. client latency: %.2f\n", (float)latencies_acc/(float)clients_treated);
@@ -227,7 +228,7 @@ int main(int argc, char *argv[])
 	 *     useptr,
 	 *     algorithm  */
 
-	max = (int)buffers;
+	max = buffers;
 	numfull = 0;
 	fillptr = 0;
 	useptr = 0;
@@ -270,10 +271,10 @@ int main(int argc, char *argv[])
 		/* Allocate a request structure */
 		request *req = malloc(sizeof(request)); 
 
-		/* TODO: Fill the request structure */
-		req->fd = connfd;
+		/* TODO: Fill the request structure */		
 		req->size = requestFileSize(connfd);
-		req->arrival = calculate_time(arrival);
+		req->fd = connfd;
+		req->arrival =calculate_time(arrival) ;
 		
 		/* Queue new request depending on scheduling algorithm */
 		if (alg == STACK) {
@@ -291,7 +292,8 @@ int main(int argc, char *argv[])
 			req->size = requestFileSize(connfd);
 			buffer[fillptr] = req;
 			fillptr++;
-			qsort(buffer,fillptr,sizeof(*buffer),requestcmp);
+			if(fillptr > 1){
+			qsort(buffer,fillptr,sizeof(*buffer),requestcmp);}
 			
 
 		}
@@ -301,9 +303,10 @@ int main(int argc, char *argv[])
 		numfull++;
 		
 		/* TODO: Synchronize */
-		pthread_cond_signal(&empty);
+		pthread_cond_signal(&fill);
 		pthread_mutex_unlock(&lock);
 	}
+	return 0;
 }
 
 

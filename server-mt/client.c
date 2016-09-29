@@ -84,19 +84,17 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	
-	printf("Jalan woooiii");
 	host = argv[1];
 	port = atoi(argv[2]);
 	filename = argv[3];
 
-	printf("Jalan woooiii2");
+	
 	/* Open a single connection to the specified host and port */
 	clientfd = Open_clientfd(host, port);
-  	printf("Jalan manuuuuu");
+  
 	clientSend(clientfd, filename);
-	printf("Stresss gara2 manu");
 	clientPrint(clientfd, print_content);
-    	printf("Stresss gara2 manu1");
+    
 	Close(clientfd);
 
 	exit(0);
