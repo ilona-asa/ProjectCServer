@@ -191,7 +191,7 @@ void *consumer(void *arg) {
 		printf("Avg. client latency: %.2f\n", (float)latencies_acc/(float)clients_treated);
 
 		/* TODO: Close connection with the client */
-		Close(req->fd);
+		//Close(req->fd);
 	}
 }
 
