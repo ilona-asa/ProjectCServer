@@ -154,7 +154,9 @@ void *consumer(void *arg) {
 		if (algorithm == STACK) {
 			
 			/* TODO: Implement your first scheduling policy here (STACK) */
-
+			useptr = fillptr-1;
+			req = (request *)buffer[useptr];
+			fillptr--;
 		} else if (algorithm == BF) {
 			/* TODO: Implement your second scheduling policy here (BFF) */
 			req = (request *)buffer[0];
@@ -275,7 +277,8 @@ int main(int argc, char *argv[])
 		if (alg == STACK) {
 			
 			/* TODO: Queue request according to POLICY1 (STACK) */
-
+			buffer[fillptr] = req;
+			fillptr++;
 			
 		} else if(alg == BF) {
 			/* TODO: Queue request according to POLICY2 (BFF) */
