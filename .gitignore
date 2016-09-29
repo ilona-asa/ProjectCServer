@@ -7,9 +7,6 @@
 # Unignore all dirs
 !*/
 
-#Ignore dir experiment
-/experiments
-
 # Compiled source #
 ###################
 *.com
