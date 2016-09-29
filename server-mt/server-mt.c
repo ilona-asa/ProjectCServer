@@ -131,7 +131,7 @@ void *consumer(void *arg) {
 	worker.statics = 0;
 	worker.dynamics = 0;
 				
-	request *req;
+	
 	struct timeval dispatch;
 	
 
@@ -149,6 +149,12 @@ void *consumer(void *arg) {
 		gettimeofday(&dispatch, NULL);
 		
 		/* TODO: Set the ID of the the thread in charge */
+		 if(worker.id < 0) { 
+                            worker.id = threadid;
+                            threadid++; 
+                           }
+                          worker.count++;
+                           request *req;
 
 		/* Get the request from the queue according to the sched algorithm */
 		if (algorithm == STACK) {
@@ -191,7 +197,7 @@ void *consumer(void *arg) {
 		printf("Avg. client latency: %.2f\n", (float)latencies_acc/(float)clients_treated);
 
 		/* TODO: Close connection with the client */
-		//Close(req->fd);
+		Close(req->fd);
 	}
 }
 
