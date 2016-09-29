@@ -7,9 +7,6 @@
 # Unignore all dirs
 !*/
 
-#Ignore dir test
-/part2/tests
-
 # Compiled source #
 ###################
 *.com
