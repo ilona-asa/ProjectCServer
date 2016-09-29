@@ -142,7 +142,7 @@ void *consumer(void *arg) {
 		
 		/* TODO: Wait if there is no client to be served. */
 		while(numfull == 0){
-			phtread_cond_wait(&fill, &lock);
+			pthread_cond_wait(&fill, &lock);
 		}
 	
 		/* TODO: Get the dispatch time */
@@ -182,8 +182,8 @@ void *consumer(void *arg) {
 		latencies_acc += (long)(req->dispatch - req->arrival);
 
 		/* TODO: Synchronize */
-		phthread_cond_signal(&empty);
-		phthread_mutex_unlock(&lock);
+		pthread_cond_signal(&empty);
+		pthread_mutex_unlock(&lock);
 
 		/* TODO: Dispatch the request to the Request module */
 
@@ -229,12 +229,10 @@ int main(int argc, char *argv[])
 	
 
 	/* TODO: Allocate the requests queue  */
-
-	request *req = malloc(sizeof(buffers));
+	buffer = malloc(buffers * sizeof(*buffer));
 	
 	/* TODO: Allocate the threads buffer */
-
-	buffer = malloc(sizeof(request*));
+	cid = malloc(threads*sizeof(*cid));
 
 	/* TODO: Create N consumer threads */
 	int i;
@@ -267,8 +265,8 @@ int main(int argc, char *argv[])
 		request *req = malloc(sizeof(request)); 
 
 		/* TODO: Fill the request structure */
-		req->size = requestFileSize(connfd);
 		req->fd = connfd;
+		req->size = requestFileSize(connfd);
 		req->arrival = calculate_time(arrival);
 		
 		/* Queue new request depending on scheduling algorithm */
@@ -297,8 +295,8 @@ int main(int argc, char *argv[])
 		numfull++;
 		
 		/* TODO: Synchronize */
-		phthread_cond_signal(&empty);
-		phthread_mutex_unlock(&lock);
+		pthread_cond_signal(&empty);
+		pthread_mutex_unlock(&lock);
 	}
 }
 

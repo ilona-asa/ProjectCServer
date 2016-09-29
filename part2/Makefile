@@ -8,7 +8,7 @@ TARGET = server-mt
 CC = gcc
 CFLAGS = -g -Wall
 
-LIBS = -pthread 
+LIBS = -lpthread 
 
 .SUFFIXES: .c .o 
 
@@ -18,13 +18,13 @@ server-mt: server-mt.o request.o util.o
 	$(CC) $(CFLAGS) -o server-mt server-mt.o request.o util.o $(LIBS)
 
 client: client.o util.o
-	$(CC) $(CFLAGS) -o client client.o util.o $(LIBS)
+	$(CC) $(CFLAGS) -o client client.o util.o
 
 output.cgi: output.c
 	$(CC) $(CFLAGS) -o output.cgi output.c
 
 .c.o:
-	$(CC) $(CFLAGS) -o $@ -c $(LIBS) $< 
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
 	-rm -f $(OBJS) server-mt client output.cgi
