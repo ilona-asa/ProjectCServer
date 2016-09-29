@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
 	 *     useptr,
 	 *     algorithm  */
 
-	max = (int)buffer;
+	max = (int)buffers;
 	numfull = 0;
 	fillptr = 0;
 	useptr = 0;
