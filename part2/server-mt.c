@@ -191,7 +191,7 @@ void *consumer(void *arg) {
 		printf("Avg. client latency: %.2f\n", (float)latencies_acc/(float)clients_treated);
 
 		/* TODO: Close connection with the client */
-		close;
+		Close(req->fd);
 	}
 }
 
@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
 	 *     useptr,
 	 *     algorithm  */
 
-	max = buffer;
+	max = (int)buffer;
 	numfull = 0;
 	fillptr = 0;
 	useptr = 0;
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 	int i;
 	for(i = 0; i < threads; i++) {
 		// membuat allocate size dari thread sebesar size dari pthread
-		cid[i] = malloc(size)of(pthred_t));
+		cid[i] = malloc(sizeof(pthread_t));
 		//membuat thread baru dan memanggil fungsi consumer untuk melakukan request
 		pthread_create(cid[i],NULL,consumer,NULL);
 	}
@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
 		pthread_mutex_lock(&lock);
 
 		/* TODO: If the request queue is full, wait until somebody frees one slot */
-		while(numfull = max){
+		while(numfull == max){
 			pthread_cond_wait(&empty, &lock);
 		}			
 				
@@ -270,9 +270,7 @@ int main(int argc, char *argv[])
 		req->size = requestFileSize(connfd);
 		req->fd = connfd;
 		req->arrival = calculate_time(arrival);
-		gettimeofday(&arrival, NULL);               
-                req->dispatch = calculate_time(arrival);
-
+		
 		/* Queue new request depending on scheduling algorithm */
 		if (alg == STACK) {
 			
