@@ -122,8 +122,10 @@ long calculate_time(struct timeval t) {
 void *consumer(void *arg) {
 	/* assert(arg != NULL); */
 
-	/* TODO: Create a thread structure */
+	/* TODO: Create a thread structure */ 
+
 	thread worker;
+
 	/* TODO: Initialize the statistics of the thread structure */
 	
 	worker.id = -1;
@@ -244,9 +246,9 @@ int main(int argc, char *argv[])
 	/* TODO: Create N consumer threads */
 	int i;
 	for(i = 0; i < threads; i++) {
-		// membuat allocate size dari thread sebesar size dari pthread
+		// Create allocate size from thread = sizeof pthread //
 		cid[i] = malloc(sizeof(pthread_t));
-		//membuat thread baru dan memanggil fungsi consumer untuk melakukan request
+		//Create new thread and call consumer-function to do request //
 		pthread_create(cid[i],NULL,consumer,NULL);
 	}
 

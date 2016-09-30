@@ -128,7 +128,7 @@ void requestGetFiletype(char *filename, char *filetype) {
 /**
  * Handles a dynamic request.
  */
-/* TODO: add worker DONE*/
+/* TODO: add worker */
 void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, long dispatch, thread *worker)
 {
 	char buf[MAXLINE], *emptylist[] = {NULL};
@@ -162,7 +162,7 @@ void requestServeDynamic(int fd, char *filename, char *cgiargs, long arrival, lo
  * Handles a static request.
  * Responds to @fd, sending @filesize bytes from @filename.
  */
-/* TODO: Add worker DONE*/
+/* TODO: Add worker */
 void requestServeStatic(int fd, char *filename, int filesize, long arrival, long dispatch, thread *worker) 
 {
 	int srcfd;
@@ -214,7 +214,7 @@ void requestServeStatic(int fd, char *filename, int filesize, long arrival, long
  * Receives and handles a request from @fd, setting the
  * @arrival and @dispatch times for the statistics.
  */
-/* TODO: Add worker DONE*/
+/* TODO: Add worker */
 void requestHandle(int fd, long arrival, long dispatch, thread *worker)
 {
 
