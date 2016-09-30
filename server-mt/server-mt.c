@@ -100,6 +100,7 @@ void getargs(int argc, char *argv[], int *port, int *threads, int *buffers, sche
 int requestcmp(const void *first, const void *second) {
 	assert(first != NULL);
 	assert(second != NULL);
+	// Qsort will sort from big size to small size
 	return ((*(request **)second)->size - (*(request **)first)->size);
 }
 
@@ -191,6 +192,8 @@ void *consumer(void *arg) {
 		latencies_acc += (long)(req->dispatch - req->arrival);
 
 		/* TODO: Synchronize */
+		/* to give signal to program if the data buffer have empty space and ready to fill with other req
+		   and to unlock*/
 		pthread_cond_signal(&empty);
 		pthread_mutex_unlock(&lock);
 
@@ -295,6 +298,7 @@ int main(int argc, char *argv[])
 			req->size = requestFileSize(connfd);
 			buffer[fillptr] = req;
 			fillptr++;
+			// to check if there is only one file, so the program do not need to do sorting
 			if(fillptr > 1){
 			qsort(buffer,fillptr,sizeof(*buffer),requestcmp);}
 			
@@ -306,6 +310,7 @@ int main(int argc, char *argv[])
 		numfull++;
 		
 		/* TODO: Synchronize */
+		// to tell the consumer there is a or more req in buffer and to open the lock so consumer can update the variabel
 		pthread_cond_signal(&fill);
 		pthread_mutex_unlock(&lock);
 	}
