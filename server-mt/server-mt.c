@@ -167,11 +167,12 @@ void *consumer(void *arg) {
 			fillptr--;
 		} else if (algorithm == BF) {
 			/* TODO: Implement your second scheduling policy here (BFF) */
+			useptr = fillptr;
 			req = (request *)buffer[0];
-          		buffer[0] = buffer[fillptr - 1];
-                       	if(fillptr > 1) 
+          		buffer[0] = buffer[useptr - 1];
+                       	if(useptr > 1) 
 			{ 
-                        	qsort(buffer, fillptr, sizeof(*buffer), requestcmp); 
+                        	qsort(buffer, useptr, sizeof(*buffer), requestcmp); 
                         } 
 			fillptr--;
 		
