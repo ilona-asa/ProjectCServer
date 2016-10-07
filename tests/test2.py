@@ -25,7 +25,7 @@ options = {
     'clients' : 10,
     'port' : 2020,
     'server_dir' : '../server-mt/',
-    'testfile_dir' : '/tmp/' + getpass.getuser() + '/testfiles/',
+    'testfile_dir' : '../server-mt/' + getpass.getuser() + '/testfiles/',
     'testfile_name' : 'output.'
     }
     
